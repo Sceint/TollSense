@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_logo_page"
     android:layout_width="match_parent"
@@ -7,17 +8,6 @@
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
     tools:context="fun.hye.tollsense.MainActivity">
-
-
-    <Button
-        android:id="@+id/nfc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/VIN"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="55dp"
-        android:onClick="programNFC"
-        android:text="Program NFC" />
 
     <Spinner
         android:id="@+id/spinner"
@@ -29,23 +19,13 @@
         android:entries="@array/user"
         android:padding="15dp" />
 
-    <TextView
-        android:id="@+id/address"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/spinner"
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="64dp"
-        android:text="@string/address"
-        android:textSize="20sp" />
+        android:layout_marginBottom="51dp" />
 
-    <TextView
-        android:id="@+id/VIN"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/address"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="45dp"
-        android:text="@string/VIN"
-        android:textSize="20sp" />
+
 </RelativeLayout>

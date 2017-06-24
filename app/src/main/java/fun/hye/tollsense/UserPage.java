@@ -1,43 +1,32 @@
 package fun.hye.tollsense;
 
-import android.app.PendingIntent;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.database.Cursor;
-import android.nfc.NdefMessage;
-import android.nfc.NfcAdapter;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
-public class UserPage extends AppCompatActivity {
+public class UserPage extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    TextView VIN, address;
+    ImageView imageView;
     Spinner spinner;
-    NFCManager nfcManager;
-    Intent nfcIntent;
-    Tag currentTag;
-    NdefMessage message;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_user);
 
-        VIN = (TextView) findViewById(R.id.VIN);
-        address = (TextView) findViewById(R.id.address);
+        imageView = (ImageView) findViewById(R.id.imageView);
         spinner = (Spinner) findViewById(R.id.spinner);
-
-        nfcManager = new NFCManager(this);
+        spinner.setOnItemSelectedListener(this);
     }
 
-    public void programNFC(View v) {
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String message = spinner.getSelectedItem().toString();
         if (message.equals("Select")) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -51,62 +40,23 @@ public class UserPage extends AppCompatActivity {
                     });
             AlertDialog alert = builder.create();
             alert.show();
-            return;
-        }
-        Cursor cursor = OfflineDBHelper.getInstance(this).getUserInfo(message);
-        while (cursor.moveToNext()) {
-            message += "," + cursor.getString(0);
-            message += "," + cursor.getString(1);
-            message += "," + cursor.getString(2);
-            VIN.setText(cursor.getString(1));
-            address.setText(cursor.getString(2));
-        }
-        this.message = nfcManager.createExternalMessage(message);
-        onNewIntent(nfcIntent);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-
-        try {
-            nfcManager.verifyNFC();
-            //nfcMger.enableDispatch();
-
-            nfcIntent = new Intent(this, getClass());
-            nfcIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, nfcIntent, 0);
-            IntentFilter[] intentFiltersArray = new IntentFilter[]{};
-            String[][] techList = new String[][]{{android.nfc.tech.Ndef.class.getName()}, {android.nfc.tech.NdefFormatable.class.getName()}};
-            NfcAdapter nfcAdpt = NfcAdapter.getDefaultAdapter(this);
-            nfcAdpt.enableForegroundDispatch(this, pendingIntent, intentFiltersArray, techList);
-        } catch (NFCManager.NFCNotSupported nfcNotSupported) {
-            Toast.makeText(this, "NFC not supported", Toast.LENGTH_LONG).show();
-        } catch (NFCManager.NFCNotEnabled nfcNotEnabled) {
-            Toast.makeText(this, "NFC Not enabled", Toast.LENGTH_LONG).show();
-        }
-    }
-
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        //nfcManager.disableDispatch();
-    }
-
-    @Override
-    public void onNewIntent(Intent intent) {
-        // It is the time to write the tag
-        currentTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-        if (message != null) {
-            nfcManager.writeTag(currentTag, message);
-            Toast.makeText(this, "Tag Written", Toast.LENGTH_LONG).show();
-
         } else {
-            // Handle intent
-
+            if(message.contains("1"))
+                imageView.setImageDrawable(getDrawable(R.drawable.user1));
+            else if(message.contains("2"))
+                imageView.setImageDrawable(getDrawable(R.drawable.user2));
+            else if(message.contains("3"))
+                imageView.setImageDrawable(getDrawable(R.drawable.user3));
+            else if(message.contains("4"))
+                imageView.setImageDrawable(getDrawable(R.drawable.user4));
+            Cursor cursor = OfflineDBHelper.getInstance(this).getUserInfo(message);
+            cursor.moveToNext();
         }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }
 

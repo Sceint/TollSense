@@ -21,5 +21,5 @@
         android:layout_below="@+id/message"
         android:onClick="initiateReading"
         android:layout_marginTop="55dp"
-        android:text="Initiate Reading" />
+        android:text="Scan QR Code" />
 </RelativeLayout>

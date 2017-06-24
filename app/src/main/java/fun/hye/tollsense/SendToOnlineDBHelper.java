@@ -2,8 +2,6 @@ package fun.hye.tollsense;
 
 import android.os.AsyncTask;
 
-import org.json.JSONArray;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -14,9 +12,9 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-class SendToOnlineDBHelper extends AsyncTask<JSONArray, Void, String> {
+class SendToOnlineDBHelper extends AsyncTask<String, Void, String> {
     private UploadStatus uploadStatus;
-    String file;
+    private String file;
 
     SendToOnlineDBHelper(String file, UploadStatus uploadStatus) {
         this.uploadStatus = uploadStatus;
@@ -24,9 +22,9 @@ class SendToOnlineDBHelper extends AsyncTask<JSONArray, Void, String> {
     }
 
     @Override
-    protected String doInBackground(JSONArray... resultArray) {
+    protected String doInBackground(String... resultArray) {
         try {
-            String login_url = "https://sceint.000webhostapp.com/";
+            String login_url = "192.168.0.";
             URL url = new URL(login_url + file);
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setRequestMethod("POST");
@@ -35,7 +33,7 @@ class SendToOnlineDBHelper extends AsyncTask<JSONArray, Void, String> {
 
             OutputStream outputStream = httpURLConnection.getOutputStream();
             BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-            bufferedWriter.write(resultArray[0].toString());
+            bufferedWriter.write("");
             bufferedWriter.flush();
             bufferedWriter.close();
             outputStream.close();
