@@ -25,39 +25,28 @@ public class NFCManager {
         this.activity = activity;
     }
 
-    public boolean verifyNFC() {
+    public static class NFCNotSupported extends Exception {
+
+        public NFCNotSupported() {
+            super();
+        }
+    }
+
+    public static class NFCNotEnabled extends Exception {
+
+        public NFCNotEnabled() {
+            super();
+        }
+    }
+
+    public void verifyNFC() throws NFCNotSupported, NFCNotEnabled {
         nfcAdpt = NfcAdapter.getDefaultAdapter(activity);
 
-        if (nfcAdpt == null) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-            builder.setTitle("NFC not supported");
-            builder.setMessage("NFC is not supported with this device")
-                    .setCancelable(false)
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.cancel();
-                        }
-                    });
-            AlertDialog alert = builder.create();
-            alert.show();
-            return false;
-        }
+        if (nfcAdpt == null)
+            throw new NFCNotSupported();
 
-        if (!nfcAdpt.isEnabled()) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-            builder.setTitle("NFC not enabled");
-            builder.setMessage("NFC is present but not turned on")
-                    .setCancelable(false)
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.cancel();
-                        }
-                    });
-            AlertDialog alert = builder.create();
-            alert.show();
-            return false;
-        }
-        return true;
+        if (!nfcAdpt.isEnabled())
+            throw new NFCNotEnabled();
     }
 
     public void writeTag(Tag tag, NdefMessage message) {
@@ -85,8 +74,7 @@ public class NFCManager {
 
 
     public NdefMessage createExternalMessage(String content) {
-        NdefRecord externalRecord = NdefRecord.createExternal("com.survivingwithandroid", "data", content.getBytes());
-
+        NdefRecord externalRecord = NdefRecord.createExternal("fun.hye.tollsense", "data", content.getBytes());
         return new NdefMessage(new NdefRecord[]{externalRecord});
     }
 }

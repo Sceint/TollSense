@@ -20,6 +20,9 @@ public class MainActivity extends AppCompatActivity {
 
         user = (EditText) findViewById(R.id.user);
         pass = (EditText) findViewById(R.id.pass);
+
+        OfflineDBHelper offlineDBHelper = OfflineDBHelper.getInstance(this);
+        offlineDBHelper.populateTable();
     }
 
     public void goTo(View v) {
@@ -27,9 +30,9 @@ public class MainActivity extends AppCompatActivity {
         if (user.getText().toString().equals("user") && pass.getText().toString().equals("password")) {
             intent = new Intent(MainActivity.this, UserPage.class);
             startActivity(intent);
-        } else if (user.getText().toString().equals("toll") && pass.getText().toString().equals("password"))
-
-        {
+        } else if (user.getText().toString().equals("toll") && pass.getText().toString().equals("password")) {
+            intent = new Intent(MainActivity.this, TollPage.class);
+            startActivity(intent);
 
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
