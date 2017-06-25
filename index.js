@@ -72,13 +72,32 @@ function print_table(res1) {
             columns.forEach(function(column) {
                 console.log("%s\t%s", column.metadata.colName, column.value);
             });
+<<<<<<< HEAD
+        }));
+=======
         });
+>>>>>>> origin/master
 
         connection.execSql(request);
     }
 
 
 
+<<<<<<< HEAD
+var counter = 0;
+
+function printonscreen() {
+
+    io.sockets.on('connection', function(socket) {
+        socket.emit('news', { news: '' });
+        socket.on('echo', function(data) {
+            var q = "SELECT TOP 1 * FROM toll_logs ORDER BY VIN DESC";
+            console.log(data.back);
+            socket.emit('news', { news: data.back });
+        });
+    });
+}
+=======
     var counter = 0;
 
     function printonscreen() {
@@ -92,3 +111,4 @@ function print_table(res1) {
             });
         });
     }
+>>>>>>> origin/master
