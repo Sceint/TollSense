@@ -20,17 +20,24 @@ public class MainActivity extends AppCompatActivity {
 
         user = (EditText) findViewById(R.id.user);
         pass = (EditText) findViewById(R.id.pass);
+
+        OfflineDBHelper offlineDBHelper = OfflineDBHelper.getInstance(this);
+        offlineDBHelper.populateTable();
     }
 
     public void goTo(View v) {
         Intent intent;
-        if (user.getText().toString().equals("user") && pass.getText().toString().equals("password")) {
+        String usr = user.getText().toString();
+        String password = pass.getText().toString();
+        if (usr.equals("user") && password.equals("password")) {
             intent = new Intent(MainActivity.this, UserPage.class);
             startActivity(intent);
-        } else if (user.getText().toString().equals("toll") && pass.getText().toString().equals("password"))
-
-        {
-
+        } else if (usr.equals("toll") && password.equals("password")) {
+            intent = new Intent(MainActivity.this, TollPage.class);
+            startActivity(intent);
+        } else if (usr.equals("test")) {
+            intent = new Intent(MainActivity.this, UpdateDB.class);
+            startActivity(intent);
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Invalid Details");

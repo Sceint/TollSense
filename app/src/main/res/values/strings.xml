@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">TollSense</string>
+
+    <array name="user">
+        <item>Select</item>
+        <item>user1</item>
+        <item>user2</item>
+        <item>user3</item>
+        <item>user4</item>
+    </array>
+
+    <string name="address">Bitcoin address</string>
+    <string name="VIN">VIN number</string>
 </resources>
