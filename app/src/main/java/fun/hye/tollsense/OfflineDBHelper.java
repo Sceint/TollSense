@@ -77,4 +77,11 @@ public class OfflineDBHelper extends SQLiteOpenHelper {
         return db.rawQuery("SELECT username, VIN, address, balance FROM " + TABLE_NAME1 +
                 " WHERE username = '" + user + "'", null);
     }
+
+    void updateUser(String user, String add) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("address", add);
+        db.update(TABLE_NAME1, contentValues, "username = ?", new String[]{user});
+    }
 }
