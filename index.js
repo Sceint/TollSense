@@ -86,11 +86,9 @@ function printonscreen() {
     io.sockets.on('connection', function(socket) {
         socket.emit('news', { news: '' });
         socket.on('echo', function(data) {
-            while (counter <= 50) {
-                counter++;
-                console.log(data.back);
-                socket.emit('news', { news: data.back });
-            }
+            var q = "SELECT TOP 1 * FROM toll_logs ORDER BY VIN DESC";
+            console.log(data.back);
+            socket.emit('news', { news: data.back });
         });
     });
 }
