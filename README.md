@@ -1,6 +1,6 @@
 # TollSense
 
-Smart Toll Booth application built using NodeJS, Azure Blockchain and Azure App Services.
+Smart Toll Booth application built using NodeJS, Azure Blockchain, Restbai Vehicle Recognition and Azure App Services.
 
 # Contributing
 
